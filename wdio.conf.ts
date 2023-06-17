@@ -1,5 +1,5 @@
 import type { Options } from '@wdio/types'
-
+let debug = process.env.DEBUG
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -14,8 +14,8 @@ export const config: Options.Testrunner = {
             transpileOnly: true
         }
     },
-    
-    
+
+
     //
     // ==================
     // Specify Test Files
@@ -64,7 +64,8 @@ export const config: Options.Testrunner = {
     //
     capabilities: [{
         // capabilities for local browser web tests
-        browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
+        browserName: 'chrome',// or "firefox", "microsoftedge", "safari"
+        timeouts: { implicit: 15000, pageLoad: 20000, script: 20000 },
     }],
     //
     // ===================
@@ -73,7 +74,8 @@ export const config: Options.Testrunner = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'error',
+
     //
     // Set specific log levels per logger
     // loggers:
@@ -88,6 +90,7 @@ export const config: Options.Testrunner = {
     //     webdriver: 'info',
     //     '@wdio/appium-service': 'info'
     // },
+
     //
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).
@@ -97,8 +100,7 @@ export const config: Options.Testrunner = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    //baseUrl: 'http://localhost',
-     baseUrl:'https://the-internet.herokuapp.com',
+    baseUrl: 'https://localhost',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -115,7 +117,7 @@ export const config: Options.Testrunner = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     services: ['chromedriver'],
-    
+
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -136,7 +138,7 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec',['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
 
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
@@ -158,13 +160,13 @@ export const config: Options.Testrunner = {
         // <boolean> fail if there are any undefined or pending steps
         strict: false,
         // <string> (expression) only execute the features or scenarios with tags matching the expression
-        tagExpression: '@demo',
+        tagExpression: '',
         // <number> timeout for step definitions
         timeout: 60000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
-    
+
     //
     // =====
     // Hooks
@@ -285,7 +287,7 @@ export const config: Options.Testrunner = {
      */
     // afterFeature: function (uri, feature) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name
